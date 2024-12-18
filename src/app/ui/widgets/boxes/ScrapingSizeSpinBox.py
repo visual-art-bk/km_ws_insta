@@ -1,5 +1,6 @@
 from PySide6.QtWidgets import QSpinBox
 
+
 class ScrapingSizeSpinBox(QSpinBox):
     def __init__(self, min_val=1, max_val=500, default_val=50, parent=None):
         """

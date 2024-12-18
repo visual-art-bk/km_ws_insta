@@ -1,8 +1,10 @@
-from PySide6.QtWidgets import QVBoxLayout, QHBoxLayout, QPushButton
+from PySide6.QtWidgets import QVBoxLayout, QHBoxLayout, QPushButton, QWidget
+
 
 class WindowControls:
     """창의 최소화, 최대화 및 닫기 버튼을 추가하는 클래스"""
-    def __init__(self, parent):
+
+    def __init__(self, parent: QWidget):
         self.parent = parent
         self.is_maximized = False
         self.controls_layout = QHBoxLayout()
@@ -34,13 +36,6 @@ class WindowControls:
         self.controls_layout.addWidget(self.maximize_button)
         self.controls_layout.addWidget(self.close_button)
 
-    def add_to_layout(self, main_layout: QVBoxLayout):
+    def add_to_main_layout(self, main_layout: QVBoxLayout):
         """컨트롤 레이아웃을 메인 레이아웃에 추가합니다."""
         main_layout.addLayout(self.controls_layout)
-
-
-# 사용 예시 (MainWindow 클래스 내)
-def add_window_controls(self, layout: QVBoxLayout):
-    """창 컨트롤을 UI에 추가"""
-    self.window_controls = WindowControls(self)
-    self.window_controls.add_to_layout(layout)

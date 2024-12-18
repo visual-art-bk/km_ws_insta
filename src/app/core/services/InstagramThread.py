@@ -47,52 +47,6 @@ class InstagramThread(QtCore.QThread):
 
                 await asyncio.sleep(30)
 
-                # plbw = PlayWrightBrowser(playwright=playwright)
-
-                # await plbw.init(headless=False, proxy=None)
-
-                # browser = await plbw._playwright.chromium.launch(headless=False)
-                # context = await plbw.browser.new_context()
-                # page = await plbw.context.new_page()
-
-                # await plbw.page.goto(url, timeout=1000000)
-
-                await asyncio.sleep(1)
-                # async with InstagramScraper(
-                #     headless=False, playwright=playwright, proxy=None
-                # ) as insta_scraper:
-
-                #     await insta_scraper.goto(url="https://www.instagram.com/")
-                #     self.update_status.emit('인스타그램에 접속')
-
-                # browser = await playwright.chromium.launch(headless=False)
-                # context = await browser.new_context()
-                # page = await context.new_page()
-
-                # self.update_status.emit(f"접속 중: {self.url}")
-
-                # await page.goto(self.url)
-
-                # self.update_status.emit(f"페이지 로드 완료: {self.url}")
-                # time.sleep(10)
-
-                # # 크롤링 로직
-                # for i in range(self.max_scraping_size):
-                #     try:
-                #         await page.wait_for_selector('div.event', timeout=5000)
-                #         events = await page.query_selector_all('div.event')
-
-                #         if len(events) > i:
-                #             event_text = await events[i].inner_text()
-                #             self.results.append(event_text)
-                #             self.update_progress.emit(len(self.results))
-                #         else:
-                #             break
-                #     except Exception as e:
-                #         await self.update_status.emit(f"데이터 수집 중 오류 발생: {e}")
-                #         break
-
-                # await browser.close()
                 self.finished.emit()
 
         except Exception as e:

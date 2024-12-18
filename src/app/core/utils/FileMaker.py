@@ -90,12 +90,15 @@ class FileMaker:
         # 상품분류코드(한), 상품분류코드(영) 칼럼 스타일 설정
         for col_name in ["상품분류코드(한)", "상품분류코드(영)"]:
             if col_name in final_columns:
-                col_idx = final_columns.index(col_name) + 1  # 엑셀 컬럼 인덱스는 1부터 시작
+                col_idx = (
+                    final_columns.index(col_name) + 1
+                )  # 엑셀 컬럼 인덱스는 1부터 시작
                 col_letter = get_column_letter(col_idx)
                 for row in range(2, sheet.max_row + 1):  # 헤더 제외
                     cell = sheet[f"{col_letter}{row}"]
-                    cell.alignment = Alignment(horizontal="left", vertical="center", indent=2)  # Left-Center 정렬
-
+                    cell.alignment = Alignment(
+                        horizontal="left", vertical="center", indent=2
+                    )  # Left-Center 정렬
 
         # 동적으로 추가된 칼럼에 사진 삽입 및 정렬
         for col in dynamic_columns:
@@ -104,7 +107,9 @@ class FileMaker:
 
             for row in range(2, sheet.max_row + 1):  # 헤더 제외
                 brand = sheet[f"A{row}"].value  # 브랜드 셀 값 가져오기 (A열 가정)
-                application_number = sheet[f"{col_letter}{row}"].value  # 출원번호 값 가져오기
+                application_number = sheet[
+                    f"{col_letter}{row}"
+                ].value  # 출원번호 값 가져오기
 
                 if not (brand and application_number):  # 값이 없으면 건너뜀
                     continue
@@ -133,7 +138,9 @@ class FileMaker:
 
                     # 행 높이와 열 너비를 이미지 크기에 맞춤
                     sheet.row_dimensions[row].height = img.height + 10
-                    sheet.column_dimensions[col_letter].width = (img.width / 7) + 2  # 엑셀의 열 너비 단위 변환
+                    sheet.column_dimensions[col_letter].width = (
+                        img.width / 7
+                    ) + 2  # 엑셀의 열 너비 단위 변환
 
         # 칼럼 너비를 자동으로 조정
         for col_idx, column_cells in enumerate(sheet.columns, start=1):

@@ -3,11 +3,7 @@ import traceback
 import datetime
 from PySide6 import QtWidgets, QtGui, QtCore
 from PySide6.QtWidgets import QVBoxLayout
-from app.ui.styles.rounded_window import (
-    apply_rounded_corners,
-    paint_rounded_background,
-    set_translucent_background,
-)
+from app.ui.styles import window_appearance as win_appear
 from app.ui.widgets.status_textedit import StatusTextEdit
 from app.ui.widgets.input_field import InputField, PasswordField
 from app.ui.widgets.boxes import ScrapingSizeSpinBox
@@ -29,11 +25,11 @@ class Config:
 class MainWindow(QtWidgets.QWidget):
     def paintEvent(self, event):
         """둥근 모서리 배경 그리기"""
-        paint_rounded_background(self, event, radius=30)
+        win_appear.paint_rounded_background(self, event, radius=30)
 
     def resizeEvent(self, event):
         """리사이즈 시 둥근 모서리 재적용"""
-        apply_rounded_corners(self, radius=30)
+        win_appear.apply_rounded_corners(self, radius=30)
 
     @staticmethod
     def _scale_window_size(scale):
@@ -48,10 +44,10 @@ class MainWindow(QtWidgets.QWidget):
 
     # --- UI 초기화 ---
     def initUI(self):
-        self.setWindowTitle("무신사 이벤트 페이지 크롤링")
+        self.setWindowTitle("크롤링 앱")
         layout = QtWidgets.QVBoxLayout()
 
-        self._set_ui_appearance(layout)
+        self._set_ui_appearance()
         self._set_ui_window_controls(layout)
         self._set_ui_status(layout)
         self._set_ui_signin(layout)
@@ -61,9 +57,16 @@ class MainWindow(QtWidgets.QWidget):
 
         self.setLayout(layout)
 
+    def _set_ui_appearance(self):
+        size = MainWindow._scale_window_size(0.85)
+        self.setFixedSize(*size)  # 고정 크기 설정
+
+        win_appear.set_translucent_background(self)
+        win_appear.apply_drop_shadow(self)
+
     def _set_ui_window_controls(self, layout: QVBoxLayout):
         self.window_controls = WindowControls(self)
-        self.window_controls.add_to_layout(layout)
+        self.window_controls.add_to_main_layout(layout)
 
     def _set_ui_status(self, layout: QVBoxLayout):
         # 상태 로그
@@ -99,12 +102,6 @@ class MainWindow(QtWidgets.QWidget):
         self.result_text = self.create_readonly_textedit("")
 
         layout.addWidget(self.result_text)
-
-    def _set_ui_appearance(self, layout: QVBoxLayout):
-        size = MainWindow._scale_window_size(0.85)
-        self.setFixedSize(*size)  # 고정 크기 설정
-
-        set_translucent_background(self)
 
     def create_readonly_textedit(self, initial_text):
         text_edit = QtWidgets.QTextEdit(initial_text)
